@@ -1,0 +1,15 @@
+{
+  "name": "innovation-brief",
+  "private": true,
+  "type": "module",
+  "description": "The Innovation Brief, built for real: the client-facing tool, backed by swappable AI providers.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "e2e": "node scripts/e2e.js",
+    "e2e:voice": "node scripts/e2e.js --voice",
+    "e2e:phone": "node scripts/e2e.js --size 390x844"
+  }
+}

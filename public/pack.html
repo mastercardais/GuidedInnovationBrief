@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>Innovation Brief</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ---------------------------------------------------------------------------
+   The innovation brief, as a deck. Dark ground, warm palette, atmospheric
+   orange glow. Internal pages get an orange inset border.
+
+   Two things that must stay true:
+   - Nothing here may assert a fact the tool doesn't collect.
+   - The client pack never reveals how long they took.
+--------------------------------------------------------------------------- */
+:root{
+  --accent:#CF4500; --accent-hi:#F37338;
+  --w:1280px; --h:720px;
+  --light:300; --reg:400; --med:500; --bold:700;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0E0D0C;font-family:"DM Sans",Arial,Helvetica,sans-serif;
+  display:flex;flex-direction:column;align-items:center;gap:28px;padding:28px;
+  -webkit-font-smoothing:antialiased}
+.slide{position:relative;width:var(--w);height:var(--h);flex:none;
+  background:#141413;color:#FCFBFA;
+  --soft:#B1ADA6; --faint:#777470; --rule:rgba(252,251,250,.14); --card:#222221; --cardborder:rgba(252,251,250,.10);
+  --acc:#F37338; --t1:#FCFBFA; --t2:#F38B00; --t3:#F37338;
+  padding:52px 72px 40px;display:flex;flex-direction:column;overflow:hidden}
+.slide.internal{box-shadow:inset 0 0 0 2px rgba(243,115,56,.28)}
+/* atmospheric glows — two per slide for depth, positioned via inline style */
+.glow{position:absolute;border-radius:999px;pointer-events:none}
+.glow.g1{width:1100px;height:1100px;
+  background:radial-gradient(closest-side,rgba(243,115,56,.36),rgba(207,69,0,.12) 52%,rgba(207,69,0,0) 100%)}
+.glow.g2{width:600px;height:600px;
+  background:radial-gradient(closest-side,rgba(250,200,176,.14),rgba(250,200,176,0) 100%)}
+/* masthead */
+.mast{position:relative;display:flex;align-items:center;gap:10px;font-size:15px;color:var(--faint);flex:none}
+.mast .dot{width:14px;height:14px;border-radius:50%;background:#1E5B4F;display:grid;place-items:center;flex:none}
+.mast .dot::after{content:"";width:6px;height:6px;border-radius:50%;background:#F2B632}
+.mast b{font-weight:var(--med);color:#FCFBFA}
+.mast .num{margin-left:auto;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.mast .flag{margin-left:auto;color:var(--acc);font-weight:var(--med);letter-spacing:.1em;text-transform:uppercase;font-size:13px}
+.mast .flag+.num{margin-left:18px}
+/* body */
+.body{position:relative;flex:1;display:flex;flex-direction:column;padding-top:44px;min-height:0}
+.eyebrow{color:var(--acc);font-weight:var(--med);font-size:18px;margin-bottom:12px}
+h1{font-weight:var(--light);font-size:44px;line-height:1.1;letter-spacing:-.025em;max-width:1000px;text-wrap:balance}
+h1.big{font-size:86px;line-height:0.98;letter-spacing:-.04em;max-width:960px}
+h1.mid{font-size:52px}
+.lede{font-size:22px;line-height:1.45;color:var(--soft);max-width:820px;margin-top:20px}
+.rule{height:1px;background:var(--rule);flex:none}
+.foot{position:relative;display:flex;align-items:center;font-size:15px;color:var(--faint);flex:none;padding-top:18px}
+.kicker{margin-top:auto;padding-top:24px;padding-bottom:26px}
+.kicker .rule{margin-bottom:18px}
+.kicker p{font-size:20px}
+.kicker p span{color:var(--faint)}
+/* confidence track — dots use radial-gradient halos (box-shadow clips in Chrome PDF) */
+.track{margin-top:48px;position:relative}
+.track .trackline{height:2px;background:linear-gradient(90deg,rgba(252,251,250,.55),rgba(243,139,0,.6) 50%,rgba(243,115,56,.75));position:absolute;left:0;right:0;top:7px}
+.track .cols{position:relative;display:grid;gap:48px}
+.track .col{display:flex;flex-direction:column;gap:20px}
+.track .dot{width:16px;height:16px;border-radius:999px;position:relative;flex:none}
+.track .dot::before{content:"";position:absolute;inset:-12px;border-radius:999px}
+.track .dot.d0{background:#FCFBFA}
+.track .dot.d0::before{background:radial-gradient(circle,rgba(252,251,250,.25) 30%,rgba(252,251,250,0) 70%)}
+.track .dot.d1{background:#F38B00}
+.track .dot.d1::before{background:radial-gradient(circle,rgba(243,139,0,.30) 30%,rgba(243,139,0,0) 70%)}
+.track .dot.d2{background:#F37338}
+.track .dot.d2::before{background:radial-gradient(circle,rgba(243,115,56,.35) 30%,rgba(243,115,56,0) 70%)}
+.track h3{font-size:20px;font-weight:var(--med)}
+.track p{font-size:24px;line-height:1.3;font-weight:var(--light)}
+/* layouts */
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:36px}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:36px}
+.label{font-size:14px;font-weight:var(--med);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+.label.acc{color:var(--acc)}
+ul{list-style:none;display:flex;flex-direction:column;gap:14px}
+li{font-size:21px;line-height:1.35;padding-left:22px;position:relative;font-weight:var(--light)}
+li::before{content:"";position:absolute;left:0;top:11px;width:8px;height:8px;border-radius:50%;background:var(--acc)}
+li.dim{color:var(--faint)}
+li.dim::before{background:var(--faint)}
+/* cards */
+.card{background:var(--card);border:1px solid var(--cardborder);border-radius:12px;padding:28px 30px}
+.card.hero{border-color:rgba(243,115,56,.45);background:rgba(44,30,24,.94);
+  box-shadow:0 0 0 4px rgba(243,115,56,.08),0 24px 60px rgba(207,69,0,.16)}
+.card h2{font-weight:var(--light);font-size:34px;line-height:1.14;letter-spacing:-.015em}
+.card .sub{margin-top:14px;font-size:19px;color:var(--soft);line-height:1.4}
+.quote{font-weight:var(--light);font-size:38px;line-height:1.24;letter-spacing:-.02em;max-width:1000px;
+  padding-left:34px;border-left:4px solid var(--acc)}
+.attr{margin-top:28px;margin-left:38px;font-size:19px;color:var(--faint)}
+.worth{display:flex;align-items:baseline;gap:18px;margin-top:auto;padding-top:30px}
+.worth .n{font-size:52px;font-weight:var(--light);letter-spacing:-.02em;line-height:1}
+.worth .n.words{font-size:21px;font-weight:var(--reg);letter-spacing:0;line-height:1.35}
+.worth .label{margin:0}
+.pill{display:inline-block;font-size:13px;font-weight:var(--med);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--acc);border:1px solid var(--acc);border-radius:999px;padding:5px 12px;margin-bottom:12px}
+.pill.solid{background:var(--accent);color:#FCFBFA;border-color:var(--accent)}
+.can{display:grid;grid-template-columns:repeat(var(--can-count),minmax(0,1fr));grid-template-rows:85%;align-content:center;flex:1;min-height:0;gap:16px;margin-top:24px}
+.can .card{display:flex;flex-direction:column;justify-content:center;min-height:0;padding:10px 18px}
+.can .pill{align-self:flex-start;margin-bottom:6px;padding:3px 10px}
+.can .q{font-size:21px;font-weight:var(--light);line-height:1.18;letter-spacing:-.01em}
+.people{display:flex;flex-direction:column;gap:16px;margin-top:34px}
+.person{display:flex;align-items:center;gap:16px;font-size:22px}
+.person .who{font-weight:var(--med)}
+.person .role{color:var(--faint);font-size:19px}
+.person .state{margin-left:auto;font-size:15px;font-weight:var(--med);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.person .state.done{color:var(--acc)}
+.run{display:grid;grid-template-columns:repeat(5,1fr);gap:22px;margin-top:36px}
+.run .t{font-size:20px;font-weight:var(--med);color:var(--acc);margin-bottom:10px}
+.run p{font-size:18px;line-height:1.35;font-weight:var(--light)}
+.run .slot{border-top:1px solid var(--rule);padding-top:14px}
+/* story: left intro + right newspaper card */
+.story-split{display:grid;grid-template-columns:1fr 440px;gap:72px;flex:1;min-height:0;align-items:center}
+.story-split .left{display:flex;flex-direction:column;gap:24px}
+.story-split .left h1{font-size:62px;line-height:1.04;letter-spacing:-.035em;margin:0}
+.story-split .left .lede{font-size:18px;margin:0}
+/* the newspaper card — no transform or box-shadow (they clip inside overflow:hidden slides in PDF) */
+.newscard{width:85%;justify-self:center;background:var(--card);border:1px solid var(--cardborder);border-radius:8px;
+  padding:0;display:flex;flex-direction:column;overflow:hidden}
+.newscard .photo{height:170px;background-size:cover;background-position:center 20%;flex:none}
+.newscard .inner{padding:24px 29px;display:flex;flex-direction:column;gap:15px}
+.newscard .meta{display:flex;justify-content:space-between;font-size:12px;color:var(--soft)}
+.newscard .divider{height:1px;background:rgba(252,251,250,.14)}
+.newscard .headline{font-size:24px;font-weight:var(--reg);line-height:1.12;letter-spacing:-.02em}
+.newscard .bars{display:flex;flex-direction:column;gap:8px;padding-top:3px}
+.newscard .bar{height:7px;border-radius:999px;background:rgba(252,251,250,.08)}
+.newscard .cap{font-size:12px;color:var(--faint)}
+/* concept cards */
+.concept-split{display:grid;grid-template-columns:1fr 1fr;gap:48px;flex:1;min-height:0;padding-top:16px}
+.concept-split .left{display:flex;flex-direction:column}
+.concept-split .left h1{font-size:42px;line-height:1.08;letter-spacing:-.02em;margin-bottom:16px}
+.concept-split .left .lede{font-size:20px;margin-top:0;font-weight:var(--light)}
+.concept-split .art{border-radius:12px;overflow:hidden;background:#1B1A19;border:1px solid var(--cardborder);
+  width:80%;aspect-ratio:1/1;align-self:center}
+.concept-split .art img{width:100%;height:100%;object-fit:contain;display:block}
+.concept-split .rating{display:inline-block;font-size:13px;font-weight:var(--med);letter-spacing:.12em;text-transform:uppercase;margin-top:auto;padding-top:18px}
+.concept-split .rating.loved{color:var(--acc)}
+.concept-split .rating.maybe{color:var(--soft)}
+.concept-split .rating.no{color:var(--faint);text-decoration:line-through}
+/* what happens next */
+.next{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:40px}
+.next .slot{border-top:2px solid var(--acc);padding-top:18px}
+.next .t{font-size:15px;font-weight:var(--med);letter-spacing:.12em;text-transform:uppercase;color:var(--acc);margin-bottom:14px}
+.next p{font-size:21px;line-height:1.35;font-weight:var(--light)}
+/* printing: one slide per page at exactly 1280x720 */
+@page{size:1280px 720px;margin:0}
+@media print{
+  body{background:none;display:block;padding:0;gap:0}
+  .slide{break-after:page;page-break-after:always;box-shadow:none}
+  .slide.internal{box-shadow:none}
+  .slide:last-child{break-after:auto;page-break-after:auto}
+}
+</style>
+
+<style>
+.wait{color:#B1ADA6;font-size:20px;text-align:center;padding:120px 20px;font-weight:300}
+@media print{.wait{display:none}}
+</style>
+</head><body>
+<p class="wait" id="wait">Putting the pack together…</p>
+<script>
+const ID = location.pathname.split('/')[2];
+const QS = new URLSearchParams(location.search);
+const esc = (s) => String(s ?? '').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const list = (items, cls='') => `<ul>${items.map(i => `<li class="${cls}">${esc(i)}</li>`).join('')}</ul>`;
+
+/* Glow positions: two glows per slide (g1 large warm, g2 smaller peach highlight). */
+const GLOWS = [
+  ['left:480px;top:60px',   'left:900px;top:-220px'],  // cover
+  ['left:820px;top:-360px', 'left:-100px;top:400px'],   // challenge
+  ['left:620px;top:200px',  'left:100px;top:-200px'],   // confidence
+  ['left:-100px;top:-200px','left:800px;top:300px'],    // customer
+  ['left:400px;top:100px',  'left:900px;top:-100px'],   // quote
+  ['left:760px;top:40px',   'left:-200px;top:200px'],   // winning
+  ['left:640px;top:-80px',  'left:200px;top:400px'],    // story
+  ['left:820px;top:-200px', 'left:100px;top:300px'],    // can we
+  ['left:190px;top:-420px', 'left:800px;top:200px'],    // directions
+  ['left:-200px;top:100px', 'left:700px;top:-200px'],   // concept 1
+  ['left:700px;top:-100px', 'left:-100px;top:300px'],   // concept 2
+  ['left:200px;top:200px',  'left:900px;top:-100px'],   // concept 3
+  ['left:900px;top:100px',  'left:100px;top:-200px'],   // concept 4
+  ['left:400px;top:-300px', 'left:800px;top:300px'],    // anything else
+  ['left:-260px;top:220px', 'left:700px;top:-100px'],   // who is answering
+  ['left:500px;top:40px',   'left:900px;top:-200px'],   // closing
+  ['left:500px;top:100px',  'left:-100px;top:200px'],   // runsheet
+  ['left:300px;top:-100px', 'left:800px;top:300px'],    // gaps
+];
+
+(async () => {
+  const q = new URLSearchParams(); if (QS.has('internal')) q.set('internal', '1'); if (QS.get('token')) q.set('token', QS.get('token'));
+  let BRIEF;
+  try {
+    const r = await fetch(`/api/briefs/${ID}/pack?${q}`);
+    BRIEF = await r.json();
+    if (!r.ok) throw new Error(BRIEF.error);
+  } catch (e) { document.getElementById('wait').textContent = e.message || 'The pack isn\'t available.'; return; }
+  document.getElementById('wait').remove();
+  const INTERNAL = !!BRIEF.internal;
+  document.title = `Innovation Brief · ${BRIEF.client}${INTERNAL ? ' (internal)' : ''}`;
+  const first = String(BRIEF.filledBy.name || '').split(' ')[0] || 'your';
+  const docsLine = BRIEF.docs ? `built from your answers and the ${BRIEF.docs} document${BRIEF.docs > 1 ? 's' : ''} you shared` : 'built from your answers';
+  const conf = BRIEF.confidence || [];
+  const bandCol = { 'We know this': 'var(--t1)', 'We think so': 'var(--t2)', 'Unsure': 'var(--t3)' };
+  const pipCls = { 'We know this': 'p0', 'We think so': 'p1', 'Unsure': 'p2' };
+  const imgBase = `/api/briefs/${BRIEF.id}/img/`;
+
+  const SLIDES = [
+    /* --- Cover: matches the old deck layout exactly --- */
+    { body: () => `
+      <div class="body" style="justify-content:flex-end;gap:28px;padding-bottom:56px">
+        <p style="font-size:20px;font-weight:var(--med);color:var(--acc)">A brief for the ${esc(BRIEF.client)} team</p>
+        <h1 style="font-size:116px;line-height:.96;letter-spacing:-.045em;max-width:1000px">${esc(BRIEF.runner)}</h1>
+      </div>
+      <div style="position:relative;display:flex;flex-direction:column;gap:4px;padding:18px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);font-size:17px">
+        <span style="color:var(--soft)">Completed by</span><span>${esc(BRIEF.filledBy.name)}${BRIEF.filledBy.role ? `, ${esc(BRIEF.filledBy.role)}` : ''}</span>
+      </div>` },
+
+    /* --- The challenge --- */
+    { when: () => BRIEF.question, body: () => `
+      <div class="body" style="justify-content:center;gap:40px">
+        <div style="display:grid;grid-template-columns:200px 1fr;gap:40px;align-items:start">
+          <p class="eyebrow" style="padding-top:10px">The challenge</p>
+          <h2 style="font-size:44px;font-weight:var(--light);line-height:1.12;letter-spacing:-.03em">${esc(BRIEF.question)}</h2>
+        </div>
+        ${BRIEF.setAside.length ? `<div style="display:grid;grid-template-columns:200px 1fr;gap:40px;align-items:start">
+          <p class="label" style="padding-top:4px">You also considered</p>
+          <div>${list(BRIEF.setAside, 'dim')}</div>
+        </div>` : ''}
+      </div>` },
+
+    /* --- Confidence: splits at 3 per slide --- */
+    ...(() => {
+      if (!conf.length) return [];
+      const risk = conf.find(s => s.risk);
+      const kickerHTML = `<div class="kicker">
+          <div class="rule"></div>
+          <p>${INTERNAL && risk
+            ? `<span style="color:var(--acc)">Risk ·</span> ${esc(risk.risk)}`
+            : conf.some(s => s.band === 'Unsure')
+              ? 'Where you are unsure is where the session starts. <span>Being unsure is the useful part, not a gap.</span>'
+              : 'Nothing here is rated a guess. <span>We will still test the one the rest depends on.</span>'}</p>
+        </div>`;
+      const dotCls = { 'We know this': 'd0', 'We think so': 'd1', 'Unsure': 'd2' };
+      const PER_PAGE = 3;
+      const pages = [];
+      for (let i = 0; i < conf.length; i += PER_PAGE) pages.push(conf.slice(i, i + PER_PAGE));
+      return pages.map((chunk, pi) => {
+        const contd = pi > 0 ? ' (continued)' : '';
+        return { when: () => true, body: () => `
+      <div class="body">
+        <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:8px">
+          <p class="eyebrow">How sure you are${contd}</p>
+          <h1 style="font-size:48px">What you know, and what you are still guessing</h1>
+        </div>
+        <div class="track">
+          <div class="trackline"></div>
+          <div class="cols" style="grid-template-columns:repeat(${chunk.length},1fr)">
+            ${chunk.map(s => `<div class="col">
+              <div class="dot ${dotCls[s.band] || 'd1'}"></div>
+              <h3 style="color:${bandCol[s.band]}">${esc(s.band)}</h3>
+              <p>${esc(s.text)}</p>
+            </div>`).join('')}
+          </div>
+        </div>
+        ${pi === pages.length - 1 ? kickerHTML : ''}
+      </div>` };
+      });
+    })(),
+
+    /* --- Who it's for --- */
+    { when: () => BRIEF.customer, body: () => `
+      <div class="body">
+        <p class="eyebrow">Who it is for</p>
+        <h1 class="mid">${esc(BRIEF.customer)}</h1>
+        ${BRIEF.changes.length ? `<div style="margin-top:42px"><p class="label acc">If it works, this changes for them</p>${list(BRIEF.changes)}</div>` : ''}
+        ${INTERNAL && BRIEF.changesLeftOut ? `<div class="kicker"><div class="rule"></div>
+          <p><span style="color:var(--acc)">Note ·</span> They left out "${esc(BRIEF.changesLeftOut)}"</p></div>` : ''}
+      </div>` },
+
+    /* --- Pull quote --- */
+    { when: () => BRIEF.quote, body: () => `
+      <div class="body" style="justify-content:center">
+        <p class="quote">${esc(BRIEF.quote)}</p>
+        <p class="attr">${esc(BRIEF.filledBy.name)}${BRIEF.filledBy.role ? `, ${esc(BRIEF.filledBy.role)}` : ''}</p>
+      </div>` },
+
+    /* --- Business value --- */
+    { when: () => BRIEF.businessValue.priority || BRIEF.businessValue.also.length, body: () => `
+      <div class="body">
+        <p class="eyebrow">Business value</p>
+        ${BRIEF.businessValue.priority ? `<div class="card hero" style="margin-top:6px"><span class="pill">Highest priority</span><h2>${esc(BRIEF.businessValue.priority)}</h2></div>` : ''}
+        ${BRIEF.businessValue.also.length ? `<div style="margin-top:${BRIEF.businessValue.priority ? 34 : 6}px"><p class="label">${BRIEF.businessValue.priority ? 'Also valuable' : 'Your picks'}</p>${list(BRIEF.businessValue.also)}</div>` : ''}
+        <div class="kicker">
+          <div class="rule"></div>
+          <p>The value you want this work to create for your business.</p>
+        </div>
+      </div>` },
+
+    /* --- The future article --- */
+    { when: () => BRIEF.story, body: () => {
+        const imgSrc = BRIEF.story.image ? `${imgBase}${esc(BRIEF.story.image)}` : '';
+        return `
+      <div class="body">
+        <div class="story-split">
+          <div class="left">
+            <p class="eyebrow" style="font-size:20px">If all goes well</p>
+            <h1>A press release from two years' time</h1>
+            <p class="lede" style="color:var(--soft);max-width:480px">"${esc(BRIEF.story.quote)}" — ${esc(BRIEF.story.attr)}</p>
+          </div>
+          <div class="newscard">
+            ${imgSrc ? `<div class="photo" style="background-image:url(${imgSrc})"></div>` : ''}
+            <div class="inner">
+              <div class="meta"><span>Media release</span><span>${esc(BRIEF.story.when)}</span></div>
+              <div class="divider"></div>
+              <p class="headline">${esc(BRIEF.story.headline)}</p>
+              <div class="bars">
+                <div class="bar" style="width:100%"></div>
+                <div class="bar" style="width:94%"></div>
+                <div class="bar" style="width:97%"></div>
+                <div class="bar" style="width:58%"></div>
+              </div>
+              <p class="cap">The story ${esc(first)} kept, imagining the news two years from now</p>
+            </div>
+          </div>
+        </div>
+      </div>`; } },
+
+    /* --- What they want from the workshop --- */
+    { when: () => BRIEF.workshopOutcome, body: () => `
+      <div class="body">
+        <p class="eyebrow">Workshop outcome</p>
+        <h1>What you'd like to leave with</h1>
+        <div class="card hero" style="margin:auto 0;max-width:1040px">
+          <h2>${esc(BRIEF.workshopOutcome)}</h2>
+        </div>
+        ${INTERNAL ? `<div class="kicker"><div class="rule"></div>
+          <p><span style="color:var(--acc)">Planning note ·</span> Client-stated aspiration. Align the session plan and agreed scope around it.</p></div>` : ''}
+      </div>` },
+
+    /* --- Can we? — four compact, stacked cards per slide --- */
+    ...(() => {
+      const PER_PAGE = 4;
+      const pages = [];
+      for (let i = 0; i < BRIEF.cans.length; i += PER_PAGE) pages.push(BRIEF.cans.slice(i, i + PER_PAGE));
+      return pages.map((chunk, pi) => ({ when: () => true, body: () => `
+      <div class="body">
+        <p class="eyebrow">Can we?${pi ? ' · continued' : ''}</p>
+        <h1 style="font-size:38px;line-height:1.08">Your worries, turned into questions a session can answer</h1>
+        <div class="can" style="--can-count:${chunk.length}">
+          ${chunk.map(c => `<div class="card${c.biggest ? ' hero' : ''}">
+            ${c.biggest ? '<span class="pill solid">Your biggest concern</span>' : ''}
+            <p class="q">${esc(c.can)}</p>
+          </div>`).join('')}
+        </div>
+      </div>` }));
+    })(),
+
+    /* --- Early directions summary --- */
+    { when: () => BRIEF.directions.loved.length + BRIEF.directions.maybe.length + BRIEF.directions.no.length, body: () => {
+      const cols = [
+        BRIEF.directions.loved.length ? `<div><p class="label acc">Loved it</p>${list(BRIEF.directions.loved)}</div>` : '',
+        BRIEF.directions.maybe.length ? `<div><p class="label">Maybe</p>${list(BRIEF.directions.maybe)}</div>` : '',
+        BRIEF.directions.no.length ? `<div><p class="label">Not for us</p>${list(BRIEF.directions.no, 'dim')}</div>` : '',
+      ].filter(Boolean);
+      return `
+      <div class="body">
+        <p class="eyebrow">Early directions</p>
+        <h1>What you reacted to</h1>
+        <div style="display:grid;grid-template-columns:repeat(${cols.length},1fr);gap:32px;margin-top:36px">
+          ${cols.join('')}
+        </div>
+        <div class="kicker">
+          <div class="rule"></div>
+          <p>${BRIEF.directions.own?.length ? `Your own: ${BRIEF.directions.own.map(esc).join(', ')}. ` : ''}<span>Reactions, not decisions. Nothing here is on the hook.</span></p>
+        </div>
+      </div>`; } },
+
+    /* --- One slide per concept --- */
+    ...(BRIEF.directions.concepts || []).filter(c => c.title).map((c, i) => {
+      const total = (BRIEF.directions.concepts || []).filter(x => x.title).length;
+      const ratingLabel = { loved: 'Loved it', maybe: 'Maybe', no: 'Not for us' }[c.rating] || '';
+      const ratingCls = c.rating || '';
+      const imgSrc = c.image ? `${imgBase}${esc(c.image)}` : '';
+      return { when: () => true, body: () => `
+      <div class="body">
+        <p class="eyebrow">Concept ${i + 1} of ${total}</p>
+        <div class="concept-split">
+          <div class="left">
+            <h1>${esc(c.title)}</h1>
+            <p class="lede">${esc(c.line)}</p>
+            ${ratingLabel ? `<p class="rating ${ratingCls}">${ratingLabel}</p>` : ''}
+          </div>
+          ${imgSrc ? `<div class="art"><img src="${imgSrc}" alt="Concept storyboard"></div>` : ''}
+        </div>
+      </div>` };
+    }),
+
+    /* --- Anything else --- */
+    { when: () => BRIEF.anythingElse, body: () => `
+      <div class="body">
+        <p class="eyebrow">In your own words</p>
+        <h1 class="mid" style="font-size:${BRIEF.anythingElse.length > 220 ? 30 : 40}px;max-width:1040px">${esc(BRIEF.anythingElse)}</h1>
+        <div class="kicker">
+          <div class="rule"></div>
+          <p>The last thing you told us. <span>It shapes what we can actually build in the room.</span></p>
+        </div>
+      </div>` },
+
+    /* --- Who is answering (only if invitees) --- */
+    { when: () => BRIEF.answering.length > 1, body: () => `
+      <div class="body">
+        <p class="eyebrow">Who is answering</p>
+        <h1>Your brief, and the second opinion</h1>
+        <div class="people">
+          ${BRIEF.answering.map(p => `<div class="person"><span class="who">${esc(p.name)}</span><span class="role">${esc(p.role)}</span><span class="state${p.done ? ' done' : ''}">${esc(p.state)}</span></div>`).join('')}
+        </div>
+        <div class="kicker">
+          <div class="rule"></div>
+          <p>Same questions, sent separately. <span>When the others come back, this is where you will see it differently, which is the most useful part.</span></p>
+        </div>
+      </div>` },
+
+    /* --- Closing: Digital Labs contact --- */
+    { body: () => `
+      <div class="body" style="justify-content:center;align-items:center;text-align:center;gap:48px">
+        <img src="/assets/dl-logo-light.png" alt="Digital Labs" style="height:53px">
+        <h1 style="font-size:44px;max-width:800px">We'll be in touch in the next two business days</h1>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+          <p style="font-size:16px;font-weight:500;margin:0;color:rgba(252,251,250,.82)">Jonathon Lau</p>
+          <p style="font-size:14px;margin:0;color:rgba(252,251,250,.52)">Managing Consultant, Digital Labs</p>
+          <p style="font-size:13px;margin:3px 0 0;color:rgba(252,251,250,.42)">+61 416 441 813</p>
+        </div>
+      </div>` },
+
+    /* --- INTERNAL: session design --- */
+    { internal: true, when: () => BRIEF.runsheet?.length, body: () => `
+      <div class="body">
+        <p class="eyebrow">Recommended session design</p>
+        <h1>Day one, and what the brief lets us skip</h1>
+        <div class="run">
+          ${BRIEF.runsheet.map(s => `<div class="slot"><p class="t">${esc(s.t)}</p><p>${esc(s.p)}</p></div>`).join('')}
+        </div>
+        ${BRIEF.cut.length ? `<div class="kicker"><div class="rule"></div>
+          <p style="font-size:18px"><span style="color:var(--acc)">Cut ·</span> ${BRIEF.cut.map(esc).join('  ·  ')}</p></div>` : ''}
+      </div>` },
+
+    /* --- INTERNAL: gaps --- */
+    { internal: true, when: () => BRIEF.gaps?.length, body: () => `
+      <div class="body">
+        <p class="eyebrow">The gaps</p>
+        <h1>What they could not answer</h1>
+        <div class="cols2" style="gap:40px 56px">
+          ${BRIEF.gaps.slice(0, 4).map(g => `<div><p style="font-size:24px;font-weight:var(--med);margin-bottom:8px">${esc(g.t)}</p><p style="font-size:19px;line-height:1.4;color:var(--soft)">${esc(g.p)}</p></div>`).join('')}
+        </div>
+        <div class="kicker">
+          <div class="rule"></div>
+          <p>This is the session's actual job. <span>Read this page first.</span></p>
+        </div>
+      </div>` },
+
+    /* --- INTERNAL: a business they admire --- */
+    { internal: true, when: () => BRIEF.inspiration, body: () => `
+      <div class="body">
+        <p class="eyebrow">Client-named inspiration</p>
+        <h1>What they admire elsewhere</h1>
+        <div class="card" style="margin-top:32px;max-width:1040px">
+          <h2>${esc(BRIEF.inspiration)}</h2>
+        </div>
+        <div class="kicker"><div class="rule"></div>
+          <p><span style="color:var(--acc)">Explore ·</span> Client-mentioned reference only. Validate what they admire before using it to shape the work.</p></div>
+      </div>` },
+  ];
+
+  const shown = SLIDES.filter(s => (INTERNAL || !s.internal) && (!s.when || s.when()));
+  document.body.insertAdjacentHTML('beforeend', shown.map((s, i) => {
+    const g = GLOWS[i] || GLOWS[0];
+    return `
+    <section class="slide${s.internal ? ' internal' : ''}">
+      <div class="glow g1" style="${g[0]}"></div>
+      <div class="glow g2" style="${g[1]}"></div>
+      <header class="mast">
+        <span class="dot"></span><b>${esc(BRIEF.client)}</b><span>with Digital Labs</span>
+        ${s.internal ? '<span class="flag">Digital Labs only</span>' : ''}
+        <span class="num">${String(i + 1).padStart(2, '0')}</span>
+      </header>
+      ${s.body()}
+      <div class="rule"></div>
+      <footer class="foot"><span>${esc(BRIEF.runner)}</span><span style="flex:1;text-align:center">${esc(BRIEF.date)}</span></footer>
+      <img src="/assets/dl-logo-light.png" alt="Digital Labs" style="position:absolute;bottom:40px;right:72px;height:24.2px">
+    </section>`;
+  }).join(''));
+})();
+</script>
+</body></html>

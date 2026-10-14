@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Innovation Briefs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..700&display=swap">
+<style>
+:root{--paper:#FBF9F6;--ink:#141413;--soft:#66615B;--faint:#9A948C;--rule:#E8E2DA;--card:#fff;--accent:#CF4500;--acc-soft:#FCEDE4;--ok:#2F6B4F;--ok-soft:#E5F1EA;color-scheme:light}
+*{box-sizing:border-box;margin:0}
+body{background:var(--paper);color:var(--ink);font:16px/1.5 "DM Sans",system-ui,sans-serif;padding:0 16px 80px}
+main{max-width:980px;margin:0 auto}
+header{display:flex;align-items:baseline;gap:14px;padding:40px 0 28px;border-bottom:1px solid var(--rule)}
+header h1{font-size:28px;font-weight:500;letter-spacing:-.01em}
+header span{color:var(--faint)}
+h2{font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin:36px 0 14px}
+.row{display:flex;gap:10px;align-items:end;flex-wrap:wrap}
+label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--soft);flex:1;min-width:120px}
+input{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:8px 12px;min-height:40px;width:100%}
+input.sm{min-height:34px;font-size:14px;border-radius:8px;padding:6px 10px}
+input:focus{outline:2px solid rgba(207,69,0,.35);outline-offset:1px}
+button,.btn{font:500 14px/1 "DM Sans",system-ui,sans-serif;border:1px solid var(--rule);background:var(--card);color:var(--ink);border-radius:999px;padding:0 14px;min-height:40px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+button.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+button.sm{min-height:32px;font-size:13px;padding:0 12px}
+button:hover,.btn:hover{border-color:var(--faint)}
+button:disabled{opacity:.5;cursor:default}
+.err{color:var(--accent);font-size:13px;min-height:18px;margin-top:4px}
+
+/* kebab menu */
+.kebab{position:relative;display:inline-flex}
+.kebab-btn{background:none;border:none;min-height:32px;width:32px;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;font-size:20px;line-height:1;color:var(--faint);letter-spacing:2px}
+.kebab-btn:hover{background:var(--rule)}
+.kebab-menu{display:none;position:absolute;right:0;top:100%;margin-top:4px;background:var(--card);border:1px solid var(--rule);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.1);padding:4px;z-index:10;min-width:180px}
+.kebab.open .kebab-menu{display:block}
+.kebab-menu button{width:100%;border:none;border-radius:8px;min-height:36px;font-size:14px;padding:0 12px;justify-content:flex-start;color:var(--ink);background:none}
+.kebab-menu button:hover{background:#F6F2ED}
+.kebab-menu button.danger{color:#C53030}
+.kebab-menu button.danger:hover{background:#FFF0F0}
+
+/* client card */
+.client{background:var(--card);border:1px solid var(--rule);border-radius:18px;padding:18px 20px;margin-bottom:16px}
+.client-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.client-head .name{font-size:22px;font-weight:500}
+.client-head .grow{flex:1}
+.client-head .when{color:var(--faint);font-size:13px}
+
+/* engagement section inside a client */
+.eng{margin-top:14px;padding-top:14px;border-top:1px solid var(--rule)}
+.eng-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.eng-head .ename{font-size:16px;font-weight:500}
+.eng-head .when{color:var(--faint);font-size:13px}
+.eng-head .grow{flex:1}
+
+/* person row inside an engagement */
+.person{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 0;border-bottom:1px dashed var(--rule)}
+.person:last-child{border-bottom:none}
+.person .pname{font-weight:500;font-size:15px}
+.person .pemail{color:var(--faint);font-size:13px}
+.person .prole{color:var(--soft);font-size:13px}
+.person .grow{flex:1}
+.chip{font-size:12px;font-weight:600;letter-spacing:.03em;border-radius:999px;padding:3px 9px;background:#F1ECE6;color:var(--soft)}
+.chip.sent{background:var(--ok-soft);color:var(--ok)}
+.chip.started{background:var(--acc-soft);color:var(--accent)}
+.chip.sponsor{background:#FFF3DC;color:#A67B00}
+.empty{color:var(--faint);padding:20px 0;font-size:14px}
+.people{margin-top:10px}
+
+/* brief chips inline with person */
+.briefs{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.brief-chip{font-size:12px;border-radius:8px;padding:3px 8px;background:#F6F2ED;color:var(--soft);display:inline-flex;align-items:center;gap:4px;text-decoration:none}
+.brief-chip:hover{background:#EDE7DF}
+.brief-chip.sent{background:var(--ok-soft);color:var(--ok)}
+.brief-chip.started{background:var(--acc-soft);color:var(--accent)}
+.brief-chip.client-deck{background:var(--ok-soft);color:var(--ok)}
+.brief-chip.internal-deck{background:var(--acc-soft);color:var(--accent)}
+
+/* inline add person form */
+.add-row{display:flex;gap:6px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.add-row input{flex:1;min-width:100px}
+.add-row .chk{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--soft);white-space:nowrap}
+.add-row .chk input{min-height:auto;width:auto;min-width:auto}
+
+/* inline prompt for engagement name */
+.inline-prompt{display:none;gap:8px;align-items:center;margin-top:10px}
+.inline-prompt.open{display:flex}
+.inline-prompt input{flex:1;max-width:320px}
+
+@media(max-width:760px){
+  .row{flex-direction:column}
+  .client-head{flex-direction:column;align-items:stretch;gap:8px}
+  .client-head .grow{display:none}
+  .client-head .name{font-size:20px}
+  .eng-head{flex-direction:column;align-items:stretch;gap:6px}
+  .eng-head .grow{display:none}
+  .person{flex-direction:column;align-items:stretch;gap:6px}
+  .person .grow{display:none}
+  .add-row{flex-direction:column}
+  .add-row input{min-width:0}
+  .inline-prompt{flex-direction:column}
+  .inline-prompt input{max-width:none!important}
+  .briefs{width:100%}
+  .kebab-menu{right:auto;left:0}
+}
+</style>
+</head>
+<body>
+<main>
+ <header><h1>Innovation Briefs</h1><span>Digital Labs</span></header>
+
+ <h2>New client</h2>
+ <div class="row">
+  <label>Client name<input id="newClient" placeholder="Wattlebird Bank"></label>
+  <button class="primary" id="addClient">Add client</button>
+ </div>
+ <p class="err" id="topErr"></p>
+
+ <h2>Engagements</h2>
+ <div id="app"><p class="empty">Loading...</p></div>
+</main>
+<script>
+const $=(s,el=document)=>el.querySelector(s);
+const $$=(s,el=document)=>[...el.querySelectorAll(s)];
+const h=(s)=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const api=async(path,opt={})=>{const r=await fetch('/api/console/'+path,{...opt,headers:{'Content-Type':'application/json',...(opt.headers||{})}});const j=await r.json().catch(()=>({}));if(!r.ok) throw new Error(j.error||r.status);return j;};
+const ago=(iso)=>{if(!iso) return '';const m=Math.round((Date.now()-new Date(iso))/60000);return m<1?'just now':m<60?`${m}m ago`:m<1440?`${Math.round(m/60)}h ago`:new Date(iso).toLocaleDateString('en-AU',{day:'numeric',month:'short'});};
+const STATUS={new:'Not opened',started:'In progress',sent:'Sent'};
+const pLink=(id)=>`${location.origin}/p/${id}`;
+
+// close any open kebab when clicking elsewhere
+document.addEventListener('click',e=>{if(!e.target.closest('.kebab')) $$('.kebab.open').forEach(k=>k.classList.remove('open'));});
+
+// --- add client ---
+$('#addClient').onclick=async()=>{
+  const inp=$('#newClient'),name=inp.value.trim(); if(!name) return;
+  $('#addClient').disabled=true; $('#topErr').textContent='';
+  try{ await api('clients',{method:'POST',body:JSON.stringify({name})}); inp.value=''; load(); }
+  catch(e){ $('#topErr').textContent=e.message; }
+  $('#addClient').disabled=false;
+};
+$('#newClient').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('#addClient').click();}});
+
+async function load(){
+  const app=$('#app');
+  let data;
+  try{ data=await api('overview'); }catch(e){ app.innerHTML=`<p class="empty">${h(e.message)}</p>`; return; }
+  if(!data.length){ app.innerHTML='<p class="empty">No clients yet. Add one above.</p>'; return; }
+  app.innerHTML=data.map(c=>clientCard(c)).join('');
+  bind();
+}
+
+function clientCard(c){
+  const engs=c.engagements||[];
+  return `<div class="client" data-cid="${h(c.id)}">
+    <div class="client-head">
+      <span class="name">${h(c.name)}</span>
+      <span class="when">${ago(c.createdAt)}</span>
+      <span class="grow"></span>
+      <button class="sm" data-addeng-btn>Add engagement</button>
+      <div class="kebab">
+        <button class="kebab-btn" data-kebab-toggle title="More options">&middot;&middot;&middot;</button>
+        <div class="kebab-menu">
+          <button class="danger" data-delclient>Delete client</button>
+        </div>
+      </div>
+    </div>
+    <div class="inline-prompt" data-eng-prompt>
+      <input class="sm" data-ename placeholder="Engagement name, e.g. Payments Discovery">
+      <button class="sm primary" data-doaddeng>Create</button>
+      <button class="sm" data-canceleng>Cancel</button>
+    </div>
+    ${engs.map(e=>engSection(e)).join('')}
+    ${!engs.length?'<p class="empty" style="padding:10px 0 0">No engagements yet.</p>':''}
+  </div>`;
+}
+
+function engSection(e){
+  const people=e.people||[];
+  return `<div class="eng" data-eid="${h(e.id)}">
+    <div class="eng-head">
+      <span class="ename">${h(e.name)}</span>
+      <span class="when">${ago(e.createdAt)}</span>
+      <span class="grow"></span>
+      <div class="kebab">
+        <button class="kebab-btn" data-kebab-toggle title="More options">&middot;&middot;&middot;</button>
+        <div class="kebab-menu">
+          <button class="danger" data-deleng>Delete engagement</button>
+        </div>
+      </div>
+    </div>
+    <div class="people">
+      ${people.length?people.map(p=>personRow(p)).join(''):''}
+    </div>
+    <div class="add-row" data-addperson>
+      <input class="sm" data-pname placeholder="Name">
+      <input class="sm" data-pemail placeholder="Email" type="email">
+      <input class="sm" data-prole placeholder="Role">
+      <label class="chk"><input type="checkbox" data-psponsor> Sponsor</label>
+      <button class="sm primary" data-doaddperson>Add</button>
+    </div>
+  </div>`;
+}
+
+function personRow(p){
+  const briefs=p.briefs||[];
+  return `<div class="person" data-pid="${h(p.id)}">
+    <span class="pname">${h(p.name)}</span>
+    ${p.sponsor?'<span class="chip sponsor">Sponsor</span>':''}
+    ${p.role?`<span class="prole">${h(p.role)}</span>`:''}
+    ${p.email?`<span class="pemail">${h(p.email)}</span>`:''}
+    <span class="grow"></span>
+    <div class="briefs">
+      ${briefs.map((b,i)=>{
+        const n=briefs.length>1?`#${briefs.length-i} `:'';
+        const label=n+STATUS[b.status];
+        if(b.status==='sent') return `<a class="brief-chip client-deck" href="/b/${h(b.id)}/pack.pdf" target="_blank" rel="noopener" title="Open client deck PDF · ${h(b.question||'Sent')}">${n}Client deck</a><a class="brief-chip internal-deck" href="/b/${h(b.id)}/pack.pdf?internal=1" target="_blank" rel="noopener" title="Open internal deck PDF · ${h(b.question||'Sent')}">${n}Internal deck</a>`;
+        // in-progress: open at the playback screen so you see what's been captured, not the welcome screen
+        return `<a class="brief-chip ${h(b.status)}" href="/b/${h(b.id)}?view=end" target="_blank" rel="noopener" title="${h(b.question||STATUS[b.status])}">${label}</a>`;
+      }).join('')}
+      ${!briefs.length?'<span class="chip">No submission</span>':''}
+    </div>
+    <button class="sm" data-copylink>Copy link</button>
+    <a class="btn sm" href="/p/${h(p.id)}" target="_blank" rel="noopener">Open</a>
+    <div class="kebab">
+      <button class="kebab-btn" data-kebab-toggle title="More options">&middot;&middot;&middot;</button>
+      <div class="kebab-menu">
+        <button data-resetperson>Reset to not started</button>
+        <button class="danger" data-delperson>Delete person</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function bind(){
+  // kebab toggles
+  $$('[data-kebab-toggle]').forEach(btn=>{
+    btn.onclick=(e)=>{ e.stopPropagation(); const k=btn.closest('.kebab'); $$('.kebab.open').forEach(o=>{if(o!==k)o.classList.remove('open');}); k.classList.toggle('open'); };
+  });
+
+  // add engagement: show inline prompt
+  $$('[data-addeng-btn]').forEach(btn=>{
+    const card=btn.closest('.client'), prompt=$('[data-eng-prompt]',card);
+    btn.onclick=()=>{ prompt.classList.add('open'); $('[data-ename]',prompt).focus(); };
+  });
+  // cancel engagement prompt
+  $$('[data-canceleng]').forEach(btn=>{
+    btn.onclick=()=>{ const prompt=btn.closest('[data-eng-prompt]'); prompt.classList.remove('open'); $('[data-ename]',prompt).value=''; };
+  });
+  // create engagement
+  $$('[data-doaddeng]').forEach(btn=>{
+    const card=btn.closest('.client'), prompt=$('[data-eng-prompt]',card), inp=$('[data-ename]',prompt);
+    const go=async()=>{ const name=inp.value.trim(); if(!name) return; btn.disabled=true; try{ await api('engagements',{method:'POST',body:JSON.stringify({clientId:card.dataset.cid,name})}); load(); }catch(e){ alert(e.message); btn.disabled=false; } };
+    btn.onclick=go;
+    inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();go();}if(e.key==='Escape'){prompt.classList.remove('open');inp.value='';}});
+  });
+
+  // delete client
+  $$('[data-delclient]').forEach(btn=>{
+    const card=btn.closest('.client');
+    btn.onclick=async()=>{ if(!confirm('Delete this client, all engagements, people and briefs?')) return; await api('clients/'+card.dataset.cid,{method:'DELETE'}); load(); };
+  });
+  // delete engagement
+  $$('[data-deleng]').forEach(btn=>{
+    const eng=btn.closest('.eng');
+    btn.onclick=async()=>{ if(!confirm('Delete this engagement and all its people and briefs?')) return; await api('engagements/'+eng.dataset.eid,{method:'DELETE'}); load(); };
+  });
+  // add person
+  $$('[data-doaddperson]').forEach(btn=>{
+    const eng=btn.closest('.eng'), row=btn.closest('[data-addperson]');
+    const go=async()=>{
+      const name=$('[data-pname]',row).value.trim(); if(!name) return;
+      btn.disabled=true;
+      try{ await api('people',{method:'POST',body:JSON.stringify({engagementId:eng.dataset.eid,name,email:$('[data-pemail]',row).value.trim(),role:$('[data-prole]',row).value.trim(),sponsor:$('[data-psponsor]',row).checked})}); load(); }
+      catch(e){ alert(e.message); btn.disabled=false; }
+    };
+    btn.onclick=go;
+    $$('input:not([type=checkbox])',row).forEach(inp=>inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();go();}}));
+  });
+  // reset person (delete briefs, keep person)
+  $$('[data-resetperson]').forEach(btn=>{
+    const person=btn.closest('.person');
+    btn.onclick=async()=>{ if(!confirm('Reset this person to not started? All their briefs will be deleted.')) return; await api('people/'+person.dataset.pid+'/reset',{method:'POST'}); load(); };
+  });
+  // delete person
+  $$('[data-delperson]').forEach(btn=>{
+    const person=btn.closest('.person');
+    btn.onclick=async()=>{ if(!confirm('Delete this person and their briefs?')) return; await api('people/'+person.dataset.pid,{method:'DELETE'}); load(); };
+  });
+  // copy person link
+  $$('[data-copylink]').forEach(btn=>{
+    const person=btn.closest('.person');
+    btn.onclick=async()=>{
+      try{ await navigator.clipboard.writeText(pLink(person.dataset.pid)); btn.textContent='Copied'; }catch{ prompt('Link',pLink(person.dataset.pid)); }
+      setTimeout(()=>btn.textContent='Copy link',1600);
+    };
+  });
+}
+
+load();
+</script>
+</body>
+</html>
