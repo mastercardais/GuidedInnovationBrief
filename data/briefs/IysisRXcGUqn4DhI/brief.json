@@ -1,0 +1,593 @@
+{
+  "id": "IysisRXcGUqn4DhI",
+  "personId": "EqoCkIOX7Qs",
+  "engagementId": "wiPL9GaBFgw",
+  "client": "XYZ Company",
+  "contact": "Jonny",
+  "role": "",
+  "status": "sent",
+  "createdAt": "2026-10-15T07:06:37.888Z",
+  "docs": [],
+  "digest": null,
+  "answers": {
+    "meta": {
+      "view": "end"
+    },
+    "docs": {
+      "files": [],
+      "none": true,
+      "open": true,
+      "list": null
+    },
+    "dump": {
+      "mode": 1,
+      "text": "",
+      "msgs": [
+        {
+          "who": "ai",
+          "text": " Hi Jonny, thanks for hopping on. This chat will take about two or three minutes so our team can hear it in your own words. What problem are you hoping to solve or what opportunity are you chasing?"
+        },
+        {
+          "who": "client",
+          "text": " I don't know what to do"
+        },
+        {
+          "who": "ai",
+          "text": " Thanks for saying that, it's useful to know. So,"
+        },
+        {
+          "who": "client",
+          "text": " Maybe we are"
+        },
+        {
+          "who": "ai",
+          "text": " Go on."
+        },
+        {
+          "who": "client",
+          "text": "... Maybe we wa- we, maybe we want to make a new app which is about... ... travel to China, something like that"
+        },
+        {
+          "who": "ai",
+          "text": " Hmm. A travel app for China. What is it that made this feel like a priority now? Was it, you know, business strategy, a recent event, new research, what brought it up?"
+        },
+        {
+          "who": "client",
+          "text": " Don't know"
+        },
+        {
+          "who": "ai",
+          "text": " Okay. That's useful to know too. Who would this affect most? You know, who are the customers or people right at the centre of it?"
+        },
+        {
+          "who": "client",
+          "text": " I think for outside of China, the foreigners"
+        },
+        {
+          "who": "ai",
+          "text": " Yeah, foreigners. Well, have you already tried anything in that area or is this pretty much brand new?"
+        },
+        {
+          "who": "client",
+          "text": " Brand new"
+        },
+        {
+          "who": "ai",
+          "text": " Mm. With that in mind, if it all goes well, what does success look like for you over the longer term? I just mean in plain terms, not numbers."
+        },
+        {
+          "who": "client",
+          "text": " Maybe 100 million new regist-registered users, I think, or uh, daily user activity- daily user... upset visit, something like that"
+        },
+        {
+          "who": "ai",
+          "text": " Right, so strong usage and engagement. And for the workshop itself, what would you like to leave with? You could think of an example like a prototype, or a direction tested with users, or a decision about what to pursue."
+        },
+        {
+          "who": "client",
+          "text": " Uh... one prototype. Proto, I think"
+        },
+        {
+          "who": "ai",
+          "text": " A prototype. Is there a business you think already does some part of this really well? Or you can skip it if you don't have an example."
+        },
+        {
+          "who": "client",
+          "text": " Skip it"
+        },
+        {
+          "who": "ai",
+          "text": " Thanks, Jonny. That gives us enough to work from for now. I'll play back what I've heard on the next screen. When you're ready, please press the red phone button to end the call."
+        }
+      ]
+    },
+    "cust": {
+      "alts": [
+        "People outside China who want to travel to China.",
+        "People overseas preparing for a trip to China.",
+        "People outside China looking for help with visiting China."
+      ],
+      "alt": 0,
+      "ed": null
+    },
+    "custout": {
+      "alts": [
+        [
+          "They can plan their China trip in one place."
+        ],
+        [
+          "They feel more confident arranging their visit."
+        ],
+        [
+          "They return to the app during their trip."
+        ]
+      ],
+      "alt": [
+        0,
+        0,
+        0
+      ],
+      "ed": {},
+      "own": [],
+      "sel": [
+        0
+      ]
+    },
+    "conf": {
+      "alts": [
+        [
+          "People outside China want a new app for travel to China."
+        ],
+        [
+          "Foreign visitors would use the app regularly."
+        ],
+        [
+          "The app could reach 100 million registered users."
+        ]
+      ],
+      "alt": [
+        0,
+        0,
+        0
+      ],
+      "ed": {},
+      "val": [
+        50,
+        50,
+        50
+      ],
+      "touched": [
+        false,
+        false,
+        false
+      ],
+      "seen": [
+        true,
+        true,
+        true
+      ]
+    },
+    "hmw": {
+      "alts": [
+        [
+          "How might we help people outside China plan a trip to China in one place?"
+        ],
+        [
+          "How might we make planning travel to China easier for people outside China?"
+        ],
+        [
+          "How might we learn which China travel tasks people outside China would want in one app?"
+        ]
+      ],
+      "alt": [
+        0,
+        0,
+        0
+      ],
+      "ed": {},
+      "own": null,
+      "sel": 1
+    },
+    "win": {
+      "alts": [
+        [
+          "Grow our user base among people outside China planning to travel to China."
+        ],
+        [
+          "Work towards 100 million registered users with a China travel app."
+        ],
+        [
+          "Build regular usage among foreign visitors using the app for China travel."
+        ],
+        [
+          "Test whether a China travel app deserves further investment before we build it."
+        ],
+        [
+          "Give us a prototype to guide our next product decision."
+        ],
+        [
+          "Build our capability to serve people outside China travelling to China."
+        ]
+      ],
+      "alt": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ed": {},
+      "own": [],
+      "sel": [
+        0,
+        2,
+        3
+      ],
+      "flag": 3
+    },
+    "press": {
+      "alts": [
+        {
+          "dateline": "October 2028",
+          "headline": "XYZ Company backs China travel app after testing demand",
+          "body": "The app gives people outside China one place to plan trips to China, helping foreign visitors return for travel needs. Testing showed enough demand and regular use for XYZ Company to invest further before building at scale.",
+          "quote": "We now have evidence that people want this, not just an idea we hoped would work.",
+          "attribution": "Chief Executive Officer",
+          "photo": "Foreign travellers compare phones and paper maps in a busy Chinese railway station, planning their next stop in natural afternoon light. The image is candid, with nobody looking at the camera and no visible text, logos or brand names.",
+          "when": "October 2028",
+          "image": "4307e1632d421bc8"
+        }
+      ],
+      "alt": 0,
+      "ed": {
+        "0": "XYZ Company backs China travel app after testing demand",
+        "1": "The app gives people outside China one place to plan trips to China, helping foreign visitors return for travel needs. Testing showed enough demand and regular use for XYZ Company to invest further before building at scale."
+      }
+    },
+    "worth": {
+      "sel": null
+    },
+    "con": {
+      "alts": [
+        [
+          "People inside XYZ Company may not agree that China travel is worth backing."
+        ],
+        [
+          "We may move too slowly to learn whether people outside China need this app."
+        ],
+        [
+          "We have never built a travel app for people outside China."
+        ],
+        [
+          "Putting every trip task in one app may make planning harder, not easier."
+        ]
+      ],
+      "alt": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "ed": {},
+      "own": [],
+      "sel": [
+        2,
+        1
+      ],
+      "flag": -1
+    },
+    "more": {
+      "text": ""
+    },
+    "invite": {
+      "people": [
+        {
+          "name": "",
+          "email": ""
+        }
+      ]
+    },
+    "tr": {
+      "alts": [
+        [
+          {
+            "title": "One Trip Plan",
+            "line": "One place turns travel questions into a clear China trip plan.",
+            "image": "b91e2034f6ffceaf"
+          }
+        ],
+        [
+          {
+            "title": "Ready To Go",
+            "line": "A simple check turns each visitor’s plans into tasks they can finish before leaving.",
+            "image": "4940b6b4b6ca7bfc"
+          }
+        ],
+        [
+          {
+            "title": "Shared China Plan",
+            "line": "Travellers collect advice and build one shared plan for their China trip.",
+            "image": "b4ef2e7699a3b7aa"
+          }
+        ],
+        [
+          {
+            "title": "China Travel Desk",
+            "line": "A physical travel card connects each visitor with a person who helps before and during their China trip.",
+            "image": "31e5413dd510dcf5"
+          }
+        ]
+      ],
+      "alt": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "ed": {
+        "0": {
+          "title": "One Trip Plan",
+          "line": "One place turns travel questions into a clear China trip plan."
+        }
+      },
+      "r": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "own": []
+    },
+    "gen": {
+      "frame": {
+        "key": "[false,\"\",[\" Hi Jonny, thanks for hopping on. This chat will take about two or three minutes so our team can hear it in your own words. What problem are you hoping to solve or what opportunity are you chasing?\",\" I don't know what to do\",\" Thanks for saying that, it's useful to know. So,\",\" Maybe we are\",\" Go on.\",\"... Maybe we wa- we, maybe we want to make a new app which is about... ... travel to China, something like that\",\" Hmm. A travel app for China. What is it that made this feel like a priority now? Was it, you know, business strategy, a recent event, new research, what brought it up?\",\" Don't know\",\" Okay. That's useful to know too. Who would this affect most? You know, who are the customers or people right at the centre of it?\",\" I think for outside of China, the foreigners\",\" Yeah, foreigners. Well, have you already tried anything in that area or is this pretty much brand new?\",\" Brand new\",\" Mm. With that in mind, if it all goes well, what does success look like for you over the longer term? I just mean in plain terms, not numbers.\",\" Maybe 100 million new regist-registered users, I think, or uh, daily user activity- daily user... upset visit, something like that\",\" Right, so strong usage and engagement. And for the workshop itself, what would you like to leave with? You could think of an example like a prototype, or a direction tested with users, or a decision about what to pursue.\",\" Uh... one prototype. Proto, I think\",\" A prototype. Is there a business you think already does some part of this really well? Or you can skip it if you don't have an example.\",\" Skip it\",\" Thanks, Jonny. That gives us enough to work from for now. I'll play back what I've heard on the next screen. When you're ready, please press the red phone button to end the call.\"]]"
+      },
+      "question": {
+        "key": "[\"People outside China who want to travel to China.\",[\"They can plan their China trip in one place.\"],[1,1,1]]"
+      },
+      "story": {
+        "key": "[\"How might we make planning travel to China easier for people outside China?\",[\"Grow our user base among people outside China planning to travel to China.\",\"Build regular usage among foreign visitors using the app for China travel.\",\"Test whether a China travel app deserves further investment before we build it.\"],\"Test whether a China travel app deserves further investment before we build it.\"]"
+      },
+      "directions": {
+        "key": "[\"How might we make planning travel to China easier for people outside China?\",[\"Grow our user base among people outside China planning to travel to China.\",\"Build regular usage among foreign visitors using the app for China travel.\",\"Test whether a China travel app deserves further investment before we build it.\"],\"Test whether a China travel app deserves further investment before we build it.\"]"
+      }
+    }
+  },
+  "facts": {
+    "docs": false,
+    "transcript": [
+      {
+        "who": "ai",
+        "text": "Hi Jonny, thanks for hopping on. This chat will take about two or three minutes so our team can hear it in your own words. What problem are you hoping to solve or what opportunity are you chasing?"
+      },
+      {
+        "who": "client",
+        "text": "I don't know what to do"
+      },
+      {
+        "who": "ai",
+        "text": "Thanks for saying that, it's useful to know. So,"
+      },
+      {
+        "who": "client",
+        "text": "Maybe we are"
+      },
+      {
+        "who": "ai",
+        "text": "Go on."
+      },
+      {
+        "who": "client",
+        "text": "... Maybe we wa- we, maybe we want to make a new app which is about... ... travel to China, something like that"
+      },
+      {
+        "who": "ai",
+        "text": "Hmm. A travel app for China. What is it that made this feel like a priority now? Was it, you know, business strategy, a recent event, new research, what brought it up?"
+      },
+      {
+        "who": "client",
+        "text": "Don't know"
+      },
+      {
+        "who": "ai",
+        "text": "Okay. That's useful to know too. Who would this affect most? You know, who are the customers or people right at the centre of it?"
+      },
+      {
+        "who": "client",
+        "text": "I think for outside of China, the foreigners"
+      },
+      {
+        "who": "ai",
+        "text": "Yeah, foreigners. Well, have you already tried anything in that area or is this pretty much brand new?"
+      },
+      {
+        "who": "client",
+        "text": "Brand new"
+      },
+      {
+        "who": "ai",
+        "text": "Mm. With that in mind, if it all goes well, what does success look like for you over the longer term? I just mean in plain terms, not numbers."
+      },
+      {
+        "who": "client",
+        "text": "Maybe 100 million new regist-registered users, I think, or uh, daily user activity- daily user... upset visit, something like that"
+      },
+      {
+        "who": "ai",
+        "text": "Right, so strong usage and engagement. And for the workshop itself, what would you like to leave with? You could think of an example like a prototype, or a direction tested with users, or a decision about what to pursue."
+      },
+      {
+        "who": "client",
+        "text": "Uh... one prototype. Proto, I think"
+      },
+      {
+        "who": "ai",
+        "text": "A prototype. Is there a business you think already does some part of this really well? Or you can skip it if you don't have an example."
+      },
+      {
+        "who": "client",
+        "text": "Skip it"
+      },
+      {
+        "who": "ai",
+        "text": "Thanks, Jonny. That gives us enough to work from for now. I'll play back what I've heard on the next screen. When you're ready, please press the red phone button to end the call."
+      }
+    ],
+    "customer": "People outside China who want to travel to China.",
+    "changes": [
+      "They can plan their China trip in one place."
+    ],
+    "changesOffered": [
+      "They can plan their China trip in one place.",
+      "They feel more confident arranging their visit.",
+      "They return to the app during their trip."
+    ],
+    "confidence": [
+      {
+        "text": "People outside China want a new app for travel to China.",
+        "band": "We think so"
+      },
+      {
+        "text": "Foreign visitors would use the app regularly.",
+        "band": "We think so"
+      },
+      {
+        "text": "The app could reach 100 million registered users.",
+        "band": "We think so"
+      }
+    ],
+    "question": "How might we make planning travel to China easier for people outside China?",
+    "questionOthers": [
+      "How might we help people outside China plan a trip to China in one place?",
+      "How might we learn which China travel tasks people outside China would want in one app?"
+    ],
+    "businessValue": {
+      "picked": [
+        "Grow our user base among people outside China planning to travel to China.",
+        "Build regular usage among foreign visitors using the app for China travel.",
+        "Test whether a China travel app deserves further investment before we build it."
+      ],
+      "priority": "Test whether a China travel app deserves further investment before we build it."
+    },
+    "concerns": {
+      "picked": [
+        "We have never built a travel app for people outside China.",
+        "We may move too slowly to learn whether people outside China need this app."
+      ],
+      "biggest": null
+    },
+    "story": {
+      "when": "October 2028",
+      "dateline": "October 2028",
+      "headline": "XYZ Company backs China travel app after testing demand",
+      "body": "The app gives people outside China one place to plan trips to China, helping foreign visitors return for travel needs. Testing showed enough demand and regular use for XYZ Company to invest further before building at scale.",
+      "quote": "We now have evidence that people want this, not just an idea we hoped would work.",
+      "attr": "Chief Executive Officer, XYZ Company",
+      "image": "4307e1632d421bc8"
+    },
+    "directions": {
+      "loved": [
+        "One Trip Plan",
+        "Ready To Go",
+        "Shared China Plan",
+        "China Travel Desk"
+      ],
+      "maybe": [],
+      "no": [],
+      "own": [],
+      "concepts": [
+        {
+          "title": "One Trip Plan",
+          "line": "One place turns travel questions into a clear China trip plan.",
+          "image": "b91e2034f6ffceaf",
+          "rating": "loved"
+        },
+        {
+          "title": "Ready To Go",
+          "line": "A simple check turns each visitor’s plans into tasks they can finish before leaving.",
+          "image": "4940b6b4b6ca7bfc",
+          "rating": "loved"
+        },
+        {
+          "title": "Shared China Plan",
+          "line": "Travellers collect advice and build one shared plan for their China trip.",
+          "image": "b4ef2e7699a3b7aa",
+          "rating": "loved"
+        },
+        {
+          "title": "China Travel Desk",
+          "line": "A physical travel card connects each visitor with a person who helps before and during their China trip.",
+          "image": "31e5413dd510dcf5",
+          "rating": "loved"
+        }
+      ]
+    },
+    "invited": []
+  },
+  "pack": {
+    "runner": "Making China travel easier",
+    "quote": "Maybe we want to make a new app which is about travel to China, something like that.",
+    "confidenceRisk": "You are unsure that the app could reach 100 million registered users, so test whether the audience and need are large enough before further investment.",
+    "workshopOutcome": "You want to leave with one prototype.",
+    "inspiration": "None mentioned",
+    "cans": [
+      {
+        "worry": "We have never built a travel app for people outside China.",
+        "can": "Can we make and test a useful first version for people outside China who are planning a China trip?"
+      },
+      {
+        "worry": "We may move too slowly to learn whether people outside China need this app.",
+        "can": "Can we learn quickly whether people outside China need this app before building more of it?"
+      }
+    ],
+    "runsheet": [
+      {
+        "t": "Open",
+        "p": "Agree that the first decision is whether this idea deserves further investment. Set aside the 100 million user ambition until the team has clearer evidence of a real planning problem."
+      },
+      {
+        "t": "Unpick",
+        "p": "Find out how people outside China currently plan a China trip, where planning breaks down, and which tasks they would want in one place. Separate needs for first-time visitors from needs for people who travel to China regularly."
+      },
+      {
+        "t": "Make",
+        "p": "Turn the strongest planning need into a simple One Trip Plan or Ready To Go prototype. Keep the prototype narrow enough to test the core value of making a China trip easier to plan."
+      },
+      {
+        "t": "Test",
+        "p": "Put the prototype in front of people outside China who are planning, or have recently planned, a China trip. Check whether they understand it, use it to plan, and would return to it."
+      },
+      {
+        "t": "Commit",
+        "p": "Agree what evidence would support more investment, what would stop it, and who will make that decision. Set the next learning step so the team does not spend time building before the need is clear."
+      }
+    ],
+    "cut": [
+      "The target audience is people outside China who want to travel to China.",
+      "The intended customer change is planning a China trip in one place.",
+      "The challenge is how to make China travel planning easier for this audience.",
+      "Growing users, building regular usage, and testing further investment are already ranked as business goals."
+    ],
+    "gaps": [
+      {
+        "t": "Decision owner",
+        "p": "The brief does not name who will decide whether the app deserves further investment. Confirm the person or group who owns that call."
+      },
+      {
+        "t": "Planning problem",
+        "p": "The brief does not say what currently makes China travel planning hard. Find the specific tasks, gaps, and frustrations the prototype must address."
+      },
+      {
+        "t": "First audience",
+        "p": "People outside China is a broad group. Agree which travellers to test first, such as people planning their first China trip or people travelling soon."
+      },
+      {
+        "t": "Proof of value",
+        "p": "The brief does not define regular usage or what would support the 100 million user ambition. Set practical signs of need and usage to check before more investment."
+      }
+    ]
+  },
+  "sentAt": "2026-10-15T10:01:57.794Z",
+  "updatedAt": "2026-10-15T10:02:09.833Z"
+}

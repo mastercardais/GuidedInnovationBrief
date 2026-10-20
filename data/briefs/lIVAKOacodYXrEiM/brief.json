@@ -1,0 +1,221 @@
+{
+  "id": "lIVAKOacodYXrEiM",
+  "personId": "fXG9PkoGOLg",
+  "engagementId": "E5YQiHSAbpI",
+  "client": "test2",
+  "contact": "11",
+  "role": "11",
+  "status": "started",
+  "createdAt": "2026-10-15T12:48:42.057Z",
+  "docs": [],
+  "digest": null,
+  "answers": {
+    "meta": {
+      "view": "cust"
+    },
+    "docs": {
+      "files": [],
+      "none": true,
+      "open": false,
+      "list": null
+    },
+    "dump": {
+      "mode": 1,
+      "text": "",
+      "msgs": []
+    },
+    "cust": {
+      "alts": [
+        "People who currently use the product or service linked to test2’s opportunity.",
+        "People who rely on that product or service to complete something in their everyday lives.",
+        "People who would notice if their experience with that product or service became easier or better."
+      ],
+      "alt": 0,
+      "ed": null
+    },
+    "custout": {
+      "alts": [
+        [
+          "They complete the task linked to this opportunity with less effort."
+        ],
+        [
+          "They spend less time dealing with the problem this opportunity is meant to address."
+        ],
+        [
+          "They feel more confident when using the product or service."
+        ]
+      ],
+      "alt": [
+        0,
+        0,
+        0
+      ],
+      "ed": {},
+      "own": [],
+      "sel": []
+    },
+    "conf": {
+      "alts": [
+        [
+          "These customers have a problem worth solving."
+        ],
+        [
+          "These customers would notice a useful change if test2 acted."
+        ],
+        [
+          "Test2 can reach the people affected by this opportunity."
+        ]
+      ],
+      "alt": [
+        0,
+        0,
+        0
+      ],
+      "ed": {},
+      "val": [
+        50,
+        50,
+        50
+      ],
+      "touched": [
+        false,
+        false,
+        false
+      ],
+      "seen": [
+        false,
+        false,
+        false
+      ]
+    },
+    "hmw": {
+      "alts": [
+        [],
+        [],
+        []
+      ],
+      "alt": [
+        0,
+        0,
+        0
+      ],
+      "ed": {},
+      "own": null,
+      "sel": null
+    },
+    "win": {
+      "alts": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "alt": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ed": {},
+      "own": [],
+      "sel": [],
+      "flag": -1
+    },
+    "press": {
+      "alts": [],
+      "alt": 0,
+      "ed": {}
+    },
+    "worth": {
+      "sel": null
+    },
+    "con": {
+      "alts": [
+        [],
+        [],
+        [],
+        []
+      ],
+      "alt": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "ed": {},
+      "own": [],
+      "sel": [],
+      "flag": -1
+    },
+    "more": {
+      "text": ""
+    },
+    "invite": {
+      "people": [
+        {
+          "name": "",
+          "email": ""
+        }
+      ]
+    },
+    "tr": {
+      "alts": [
+        [],
+        [],
+        [],
+        []
+      ],
+      "alt": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "ed": {},
+      "r": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      "own": []
+    },
+    "gen": {
+      "frame": {
+        "key": "[false,\"\",[]]"
+      }
+    }
+  },
+  "facts": {
+    "docs": false,
+    "customer": "People who currently use the product or service linked to test2’s opportunity.",
+    "changes": [],
+    "changesOffered": [
+      "They complete the task linked to this opportunity with less effort.",
+      "They spend less time dealing with the problem this opportunity is meant to address.",
+      "They feel more confident when using the product or service."
+    ],
+    "confidence": [
+      {
+        "text": "These customers have a problem worth solving.",
+        "band": null
+      },
+      {
+        "text": "These customers would notice a useful change if test2 acted.",
+        "band": null
+      },
+      {
+        "text": "Test2 can reach the people affected by this opportunity.",
+        "band": null
+      }
+    ],
+    "invited": []
+  },
+  "pack": null,
+  "sentAt": null,
+  "updatedAt": "2026-10-15T16:06:20.434Z"
+}
