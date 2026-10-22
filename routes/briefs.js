@@ -4,6 +4,35 @@ import * as store from '../lib/store.js';
 import * as gen from '../lib/brief.js';
 import { ai } from '../lib/providers/index.js';
 import { HttpError } from '../lib/errors.js';
+import { sanitizeFacts } from '../lib/guard.js';
+
+/* ---------- upload MIME allowlist ---------- */
+const ALLOWED_DOC_MIME = new Set([
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vnd.ms-powerpoint',
+  'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  'application/vnd.ms-excel',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'text/plain',
+]);
+
+/* ---------- per-brief rate limiter ----------
+   Keyed by "<briefId>:<endpoint>". Resets each window. */
+const rateMap = new Map();
+const RATE_WINDOW_MS = 60_000;
+const RATE_LIMITS = { gen: 30, read: 5, voice: 5, transcribe: 60 };
+
+function checkRate(id, sub) {
+  const limit = RATE_LIMITS[sub];
+  if (!limit) return;
+  const key = `${id}:${sub}`;
+  const now = Date.now();
+  let e = rateMap.get(key);
+  if (!e || now - e.t > RATE_WINDOW_MS) { e = { t: now, n: 0 }; rateMap.set(key, e); }
+  if (++e.n > limit) throw new HttpError(429, 'Too many requests — please wait a moment before trying again');
+}
 
 const clientView = (b) => ({
   id: b.id, personId: b.personId || null, client: b.client, contact: b.contact, role: b.role, status: b.status,
@@ -114,6 +143,7 @@ export async function handleBriefs(req, res, url, parts, { send, json, body, isS
 
   if (sub === 'state' && M === 'PUT') {
     const x = await json(req, 4 * MB);
+    if (x.facts) x.facts = sanitizeFacts(x.facts);
     let locked = false;
     store.update(id, (r) => { if (r.status === 'sent') { locked = true; return; } r.answers = x.answers ?? r.answers; r.facts = x.facts ?? r.facts; if (r.status === 'new') r.status = 'started'; });
     return send(res, 200, { ok: true, locked });
@@ -121,19 +151,24 @@ export async function handleBriefs(req, res, url, parts, { send, json, body, isS
 
   if (sub === 'docs' && M === 'POST') {
     const x = await json(req, 36 * MB);
+    const mime = (x.mime || '').split(';')[0].trim().toLowerCase() || 'application/octet-stream';
+    if (!ALLOWED_DOC_MIME.has(mime)) throw new HttpError(400, 'That file type is not supported. Please upload PDF, Word, PowerPoint, or Excel files.');
     const bytes = Buffer.from(String(x.data || ''), 'base64');
     if (!bytes.length) throw new HttpError(400, 'Empty file');
     if (bytes.length > 25 * MB) throw new HttpError(413, "Files over 25 MB can't be read");
     if (b.docs.length >= 10) throw new HttpError(400, 'Ten documents is the limit');
-    return send(res, 201, store.addDoc(id, { name: x.name || 'document', mime: x.mime || 'application/octet-stream', bytes }));
+    return send(res, 201, store.addDoc(id, { name: x.name || 'document', mime, bytes }));
   }
   if (sub === 'docs' && arg && M === 'DELETE') { store.removeDoc(id, arg); return send(res, 200, { ok: true }); }
-  if (sub === 'read' && M === 'POST') { const d = await gen.readDocs(id); return send(res, 200, { findings: d.findings || [] }); }
+  if (sub === 'read' && M === 'POST') { checkRate(id, 'read'); const d = await gen.readDocs(id); return send(res, 200, { findings: d.findings || [] }); }
 
   if (sub === 'gen' && M === 'POST' && GEN[arg]) {
+    checkRate(id, 'gen');
     const x = await json(req);
     if (x.facts) store.update(id, (r) => { if (r.status !== 'sent') r.facts = x.facts; });
-    return send(res, 200, await GEN[arg](store.get(id), x));
+    const fresh = store.get(id);
+    if (!fresh) throw new HttpError(404, 'This brief link has expired or never existed');
+    return send(res, 200, await GEN[arg](fresh, x));
   }
 
   if (sub === 'img' && M === 'GET') {
@@ -146,13 +181,17 @@ export async function handleBriefs(req, res, url, parts, { send, json, body, isS
   }
 
   if (sub === 'voice' && M === 'POST') {
+    checkRate(id, 'voice');
     const x = await json(req, 256 * 1024);
     if (typeof x.sdp !== 'string' || !x.sdp.trim()) throw new HttpError(400, 'An SDP offer is needed');
-    const s = await ai.voice.createSession({ sdp: x.sdp, instructions: gen.liveInstructions(b, x.facts || b.facts || {}) });
+    if (x.sdp.length > 16384) throw new HttpError(400, 'SDP offer is too large');
+    const freshB = store.get(id) || b;
+    const s = await ai.voice.createSession({ sdp: x.sdp, instructions: gen.liveInstructions(freshB, x.facts || freshB.facts || {}) });
     return send(res, 201, s);
   }
 
   if (sub === 'transcribe' && M === 'POST') {
+    checkRate(id, 'transcribe');
     const bytes = await body(req, 25 * MB);
     if (bytes.length < 800) return send(res, 200, { text: '' });
     const mime = (req.headers['content-type'] || 'audio/webm').split(';')[0];
@@ -163,8 +202,14 @@ export async function handleBriefs(req, res, url, parts, { send, json, body, isS
 
   if (sub === 'send' && M === 'POST') {
     const x = await json(req, 4 * MB);
-    if (store.get(id).status === 'sent') return send(res, 200, { ok: true, already: true });
-    store.update(id, (r) => { r.answers = x.answers ?? r.answers; r.facts = x.facts ?? r.facts; r.status = 'sent'; r.sentAt = new Date().toISOString(); r.pack = null; });
+    if (x.facts) x.facts = sanitizeFacts(x.facts);
+    let alreadySent = false;
+    store.update(id, (r) => {
+      if (r.status === 'sent') { alreadySent = true; return; }
+      r.answers = x.answers ?? r.answers; r.facts = x.facts ?? r.facts; r.status = 'sent'; r.sentAt = new Date().toISOString(); r.pack = null;
+    });
+    if (alreadySent) return send(res, 200, { ok: true, already: true });
+    packJobs.delete(id); // drop any stale in-flight pack so it uses the facts just written
     makePack(id).catch((e) => console.error(`pack ${id}:`, e.message));
     return send(res, 200, { ok: true });
   }

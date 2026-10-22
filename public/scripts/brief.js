@@ -90,7 +90,7 @@ const A={
 };
 const cur=(m,i)=>{const a=m.alts[i]||[]; return a[clamp(m.alt[i]??0,0,a.length-1)]??'';};
 const hmwOpt=(i)=>cur(A.hmw,i);
-const hmwText=()=>{const m=A.hmw; if(m.sel==='own'&&m.own) return m.own; const i=typeof m.sel==='number'?m.sel:0; return m.ed[i]??hmwOpt(i);};
+const hmwText=()=>{const m=A.hmw; if(m.sel==='own') return m.own||''; const i=typeof m.sel==='number'?m.sel:0; return m.ed[i]??hmwOpt(i);};
 const confText=(i)=>A.conf.ed[i]??cur(A.conf,i);
 const custText=()=>A.cust.ed??(A.cust.alts[A.cust.alt]||'');
 const coItems=()=>[...[0,1,2].map(i=>A.custout.ed[i]??cur(A.custout,i)),...A.custout.own];
@@ -174,11 +174,11 @@ const STAGES={
    Object.assign(A.con,{alts:r.concerns.map(x=>[x]),alt:[0,0,0,0],ed:{},own:[],flag:-1}); A.con.sel.length=0;
   }},
  story:{wait:'Writing the story…',
-  key:()=>JSON.stringify([hmwText(),winPicked(),winFlagged()]),
+  key:()=>JSON.stringify([A.hmw.sel,hmwText(),winPicked(),winFlagged()]),
   touched:()=>A.press.alt>0||Object.keys(A.press.ed).length>0,
   apply:(r)=>{ A.press.alts=[r]; A.press.alt=0; A.press.ed={}; preload(r.image); }},
  directions:{wait:'Sketching some early directions…',
-  key:()=>JSON.stringify([hmwText(),winPicked(),winFlagged()]),
+  key:()=>JSON.stringify([A.hmw.sel,hmwText(),winPicked(),winFlagged()]),
   touched:()=>A.tr.r.some(x=>x>-1)||A.tr.alt.some(x=>x>0),
   apply:(r)=>{ A.tr.alts=r.map(x=>[x]); A.tr.alt=[0,0,0,0]; A.tr.ed={}; A.tr.r=[-1,-1,-1,-1]; r.forEach(x=>preload(x.image)); }},
 };
@@ -747,7 +747,7 @@ function liveCall({onStarted,onDelta,onWrap,onEnded}){
       if(closed) return; // hung up while the session was being created; the server session times out unused
       pc.addEventListener('connectionstatechange',()=>console.log('[live] PC state:',pc.connectionState));
       pc.addEventListener('iceconnectionstatechange',()=>console.log('[live] ICE state:',pc.iceConnectionState));
-      if(r.iceServers?.length){ console.log('[live] adding Azure ICE servers:',r.iceServers.length); r.iceServers.forEach(s=>{ try{ pc.addIceCandidate?.(); }catch{} }); }
+      if(r.iceServers?.length){ console.log('[live] adding Azure ICE servers:',r.iceServers.length); try{ pc.setConfiguration({iceServers:r.iceServers}); }catch(e){ console.warn('[live] setConfiguration failed:',e.message); } }
       await pc.setRemoteDescription({type:'answer',sdp:r.sdp});
     }catch(e){ cleanup(); end('drop'); throw e; }
   })();

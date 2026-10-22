@@ -23,9 +23,33 @@ const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; ch
 const MB = 1024 * 1024;
 const STATIC = new Set(['scripts', 'styles', 'images']);
 
+/* ---------- security headers ---------- */
+const SEC = {
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'microphone=(self)',
+};
+// pack.html uses an inline <script> block, so script-src needs 'unsafe-inline'.
+// style-src 'unsafe-inline' covers the many dynamic style= attributes in both pages.
+const HTML_CSP = [
+  "default-src 'none'",
+  "script-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' https://fonts.gstatic.com",
+  "img-src 'self'",
+  "connect-src 'self'",
+  "media-src 'self' blob:",
+  "frame-ancestors 'none'",
+  "form-action 'none'",
+  "base-uri 'self'",
+].join('; ');
+
 /* ---------- small helpers ---------- */
 const send = (res, status, body, type = 'application/json; charset=utf-8', headers = {}) => {
-  res.writeHead(status, { 'Content-Type': type, 'Cache-Control': 'no-store', ...headers });
+  const extra = { ...SEC };
+  if (type.startsWith('text/html')) extra['Content-Security-Policy'] = HTML_CSP;
+  res.writeHead(status, { 'Content-Type': type, 'Cache-Control': 'no-store', ...extra, ...headers });
   res.end(typeof body === 'string' || Buffer.isBuffer(body) ? body : JSON.stringify(body));
 };
 const page = (res, file) => send(res, 200, readFileSync(join(PUBLIC, file)), TYPES['.html']);
@@ -40,7 +64,7 @@ const json = async (req, limit) => { const b = await body(req, limit); try { ret
 const cookies = (req) => Object.fromEntries((req.headers.cookie || '').split(/;\s*/).filter(Boolean).map((c) => c.split('=').map(decodeURIComponent)));
 const isStaff = (req, url) => !config.consoleToken || url.searchParams.get('token') === config.consoleToken || cookies(req).dl === config.consoleToken;
 const staffCookie = (url) => config.consoleToken && url.searchParams.get('token') === config.consoleToken
-  ? { 'Set-Cookie': `dl=${encodeURIComponent(config.consoleToken)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000` } : {};
+  ? { 'Set-Cookie': `dl=${encodeURIComponent(config.consoleToken)}; Path=/; HttpOnly; SameSite=Lax; Secure; Max-Age=2592000` } : {};
 
 /* ---------- routes ---------- */
 async function api(req, res, url, parts) {
@@ -72,6 +96,7 @@ async function handle(req, res) {
       const person = store.getPerson(parts[2]);
       if (!person) return send(res, 404, readFileSync(join(PUBLIC, 'missing.html')), TYPES['.html']);
       const b = store.resolvePersonBrief(person.id);
+      if (!b) return send(res, 500, { error: 'Could not create brief' });
       res.writeHead(302, { Location: `/b/${b.id}` });
       return res.end();
     }

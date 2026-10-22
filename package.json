@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "node server.js",
+    "test:guard": "node tests/guard.js",
     "e2e": "node tests/e2e.js",
     "e2e:voice": "node tests/e2e.js --voice",
     "e2e:phone": "node tests/e2e.js --size 390x844"
