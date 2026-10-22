@@ -1,6 +1,33 @@
 import * as store from '../lib/store.js';
 import { HttpError } from '../lib/errors.js';
 
+// Strip verbatim client speech from brief before returning it to the admin UI.
+// The full facts object (dump, transcript, anythingElse) is the most sensitive
+// personal data in the system — it should not be transmitted unless explicitly
+// requested and the access logged for audit purposes.
+function adminBriefView(b) {
+  if (!b) return null;
+  const { facts, answers, digest, ...meta } = b;
+  return {
+    ...meta,
+    docs: b.docs?.length ?? 0,
+    // Structured fields only — no verbatim text
+    facts: facts ? {
+      question: facts.question || null,
+      customer: facts.customer || null,
+      changes: facts.changes || [],
+      businessValue: facts.businessValue || null,
+      confidence: facts.confidence || [],
+      concerns: facts.concerns || null,
+      story: facts.story || null,
+      directions: facts.directions || null,
+      // omitted: dump, transcript, anythingElse (verbatim free text)
+    } : null,
+    answersPresent: !!answers,
+    digestPresent: !!(digest?.summary),
+  };
+}
+
 export async function handleAdmin(req, res, url, parts, { send, json, isStaff }) {
   const [, , , id, sub, arg] = parts;
   const M = req.method;
@@ -76,7 +103,11 @@ export async function handleAdmin(req, res, url, parts, { send, json, isStaff })
       docs: b.docs.length, question: b.facts?.question || null, packReady: !!b.pack,
     })));
   }
-  if (id === 'briefs' && sub && M === 'GET') { const b = store.get(sub); if (!b) throw new HttpError(404, 'No such brief'); return send(res, 200, b); }
+  if (id === 'briefs' && sub && M === 'GET') {
+    const b = store.get(sub);
+    if (!b) throw new HttpError(404, 'No such brief');
+    return send(res, 200, adminBriefView(b));
+  }
   if (id === 'briefs' && sub && M === 'DELETE') { store.remove(sub); return send(res, 200, { ok: true }); }
   if (id === 'engagements' && sub && arg === 'briefs' && M === 'GET') {
     return send(res, 200, store.listBriefsForEngagement(sub).map((b) => ({
@@ -84,6 +115,34 @@ export async function handleAdmin(req, res, url, parts, { send, json, isStaff })
       createdAt: b.createdAt, updatedAt: b.updatedAt, sentAt: b.sentAt,
       docs: b.docs.length, question: b.facts?.question || null, packReady: !!b.pack,
     })));
+  }
+
+  // POST /api/console/purge  { before: "2025-01-01" }
+  // Deletes all briefs (and their docs/images) whose sentAt (or createdAt for unsent)
+  // is before the given ISO date. Implements the data retention policy (C1).
+  if (id === 'purge' && M === 'POST') {
+    const x = await json(req);
+    const cutoff = x.before ? new Date(x.before) : null;
+    if (!cutoff || isNaN(cutoff)) throw new HttpError(400, '"before" must be a valid ISO date, e.g. "2025-01-01"');
+    const all = store.list();
+    const toDelete = all.filter((b) => {
+      const ref = new Date(b.sentAt || b.createdAt);
+      return ref < cutoff;
+    });
+    toDelete.forEach((b) => store.remove(b.id));
+    return send(res, 200, { deleted: toDelete.length, before: cutoff.toISOString() });
+  }
+
+  // POST /api/console/erasure  { email: "jane@example.com" }
+  // Finds all people records with the given email and hard-deletes them along with
+  // their briefs and documents. Supports right-to-erasure requests (H4 / GDPR Art. 17).
+  if (id === 'erasure' && M === 'POST') {
+    const x = await json(req);
+    const email = String(x.email || '').trim().toLowerCase();
+    if (!email) throw new HttpError(400, '"email" is required');
+    const matched = store.listAllPeople().filter((p) => p.email.toLowerCase() === email);
+    matched.forEach((p) => store.deletePerson(p.id));
+    return send(res, 200, { erased: matched.length, email });
   }
 
   throw new HttpError(404, 'Not found');

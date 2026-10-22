@@ -58,7 +58,6 @@ button:disabled{opacity:.5;cursor:default}
 .person{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 0;border-bottom:1px dashed var(--rule)}
 .person:last-child{border-bottom:none}
 .person .pname{font-weight:500;font-size:15px}
-.person .pemail{color:var(--faint);font-size:13px}
 .person .prole{color:var(--soft);font-size:13px}
 .person .grow{flex:1}
 .chip{font-size:12px;font-weight:600;letter-spacing:.03em;border-radius:999px;padding:3px 9px;background:#F1ECE6;color:var(--soft)}
@@ -195,7 +194,6 @@ function engSection(e){
     </div>
     <div class="add-row" data-addperson>
       <input class="sm" data-pname placeholder="Name">
-      <input class="sm" data-pemail placeholder="Email" type="email">
       <input class="sm" data-prole placeholder="Role">
       <label class="chk"><input type="checkbox" data-psponsor> Sponsor</label>
       <button class="sm primary" data-doaddperson>Add</button>
@@ -209,7 +207,6 @@ function personRow(p){
     <span class="pname">${h(p.name)}</span>
     ${p.sponsor?'<span class="chip sponsor">Sponsor</span>':''}
     ${p.role?`<span class="prole">${h(p.role)}</span>`:''}
-    ${p.email?`<span class="pemail">${h(p.email)}</span>`:''}
     <span class="grow"></span>
     <div class="briefs">
       ${briefs.map((b,i)=>{
@@ -272,7 +269,7 @@ function bind(){
     const go=async()=>{
       const name=$('[data-pname]',row).value.trim(); if(!name) return;
       btn.disabled=true;
-      try{ await api('people',{method:'POST',body:JSON.stringify({engagementId:eng.dataset.eid,name,email:$('[data-pemail]',row).value.trim(),role:$('[data-prole]',row).value.trim(),sponsor:$('[data-psponsor]',row).checked})}); load(); }
+      try{ await api('people',{method:'POST',body:JSON.stringify({engagementId:eng.dataset.eid,name,role:$('[data-prole]',row).value.trim(),sponsor:$('[data-psponsor]',row).checked})}); load(); }
       catch(e){ alert(e.message); btn.disabled=false; }
     };
     btn.onclick=go;

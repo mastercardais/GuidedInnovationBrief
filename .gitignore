@@ -6,6 +6,7 @@
 # Runtime data: clients, briefs, uploaded documents, generated images
 data/briefs/
 data/meta.json
+data/audit/
 
 # Node
 node_modules/

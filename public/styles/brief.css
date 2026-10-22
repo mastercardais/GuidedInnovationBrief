@@ -405,6 +405,12 @@ body.thinking .aura .flare{animation:breathe .6s var(--ease)}
 .pill.nope,.line.nope{animation:nope .4s}
 @keyframes nope{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 .welcome .deck{opacity:.5;top:46%}
+.disc-body{display:flex;flex-direction:column;gap:20px;max-width:560px;margin:24px auto 0}
+.disc-section{background:rgba(255,255,255,.55);border:1px solid rgba(0,0,0,.07);border-radius:14px;padding:16px 20px}
+.disc-section strong{display:block;font-size:14px;font-weight:600;color:var(--soft);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+.disc-section p{margin:0;font-size:15px;line-height:1.5;color:var(--ink)}
+.disc-note{font-size:13px;color:var(--faint);text-align:center;padding:0 8px;margin:0}
+.disc-contact{font-weight:500;color:var(--soft)}
 .deckview .drawn,.deckview .sub,.deckview .considered,.deckview .eyebrow,.deckview .nextslot{position:relative;z-index:2}
 .deckview .deck{top:40%}
 .clip .ctl{top:-16px;right:18px}

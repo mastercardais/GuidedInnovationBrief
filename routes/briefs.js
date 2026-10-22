@@ -176,7 +176,7 @@ export async function handleBriefs(req, res, url, parts, { send, json, body, isS
     let path;
     try { path = await gen.awaitImage(id, arg); } catch { throw new HttpError(502, 'That image could not be made'); }
     if (!path) throw new HttpError(404, 'Not found');
-    res.writeHead(200, { 'Content-Type': 'image/jpeg', 'Cache-Control': 'private, max-age=31536000, immutable', 'Content-Length': statSync(path).size });
+    res.writeHead(200, { 'Content-Type': 'image/jpeg', 'Cache-Control': 'private, max-age=3600', 'Content-Length': statSync(path).size });
     return createReadStream(path).on('error', () => res.destroy()).pipe(res);
   }
 

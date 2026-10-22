@@ -224,9 +224,9 @@ const BL={};
 const block=(o)=>BL[o.id]=o;
 const stepsOf=(id)=>{const b=BL[id]; return typeof b.steps==='function'?b.steps():(b.steps||1);};
 
-const S={view:null,hist:[],plan:['welcome'],why:{},skipped:{}};
+const S={view:null,hist:[],plan:['disclaimer'],why:{},skipped:{}};
 const stage=$('#stage'), backBtn=$('#backBtn');
-const FLOW=['welcome','docs','dump','cust','custout','confintro','conf','hmw','win','pressintro','press','concerns','teasersintro','teasers','anything','team','end','sent'];
+const FLOW=['disclaimer','welcome','docs','dump','cust','custout','confintro','conf','hmw','win','pressintro','press','concerns','teasersintro','teasers','anything','team','end','sent'];
 const EST=FLOW.length-1;
 // What each screen hands to the next: the stage its successors will need, started as it's left.
 const AFTER={dump:['frame'],custout:['frame'],conf:['question'],hmw:['question'],win:['story','directions']};
@@ -295,7 +295,7 @@ function setNegative(on){ document.documentElement.classList.toggle('negative',o
 /* The address bar names the screen, and the answers live on the server, so a refresh (or coming back
    to the link next week) resumes where the client was. */
 function viewSlug(){
-  const v=S.view; if(!v||v.b==='welcome') return '';
+  const v=S.view; if(!v||v.b==='disclaimer'||v.b==='welcome') return '';
   return v.b+(stepsOf(v.b)>1?'-'+(v.s+1):'');
 }
 function syncURL(){
@@ -438,6 +438,37 @@ let micCtl=null;
 const stopMic=()=>{ if(micCtl){const c=micCtl; micCtl=null; c.stop();} };
 
 /* ---------- Welcome ---------- */
+/* ---------- Privacy Disclaimer ---------- */
+block({id:'disclaimer',name:'Before we begin',group:'first',warm:.45,noSkip:true,
+ render(el){
+  el.classList.add('disclaimer');
+  el.innerHTML=`
+   <h1 class="q">${words('Before we begin, here\'s how we handle your information.')}</h1>
+   <div class="disc-body rise" style="--d:.6s">
+    <div class="disc-section">
+     <strong>What we collect</strong>
+     <p>Your name, role, and the answers you give in this brief — including any documents you upload and notes from the discovery call.</p>
+    </div>
+    <div class="disc-section">
+     <strong>How we use it</strong>
+     <p>Your answers are processed by an AI model (Azure OpenAI) to draft the innovation brief. They are not used to train AI models and are not shared with third parties beyond the AI service.</p>
+    </div>
+    <div class="disc-section">
+     <strong>How long we keep it</strong>
+     <p>Your brief and all associated data is deleted 90 days after submission. You can request earlier deletion by contacting your Digital Labs facilitator.</p>
+    </div>
+    <div class="disc-section">
+     <strong>Your rights</strong>
+     <p>You can ask to access, correct, or delete your data at any time. Contact your Digital Labs facilitator or email <span class="disc-contact">digitallabs@mastercard.com</span>.</p>
+    </div>
+    <p class="disc-note">Please do not enter sensitive personal information such as ID numbers, passwords, or financial account details into this tool.</p>
+   </div>
+   <div class="nextslot rise" style="--d:1.1s">
+    <button class="gbtn primary" type="button" data-next>I understand, let\'s begin</button>
+   </div>`;
+  bindNext(el);
+ }});
+
 block({id:'welcome',name:'Welcome',group:'first',warm:.55,noSkip:true,
  render(el){
   el.classList.add('welcome');
@@ -645,6 +676,12 @@ function dumpChat(host,o={}){
   };
   const start=async()=>{
     if(!voice){ if(!d.msgs.length) return typedTurn(); status('listen'); inp.focus(); return; }
+    // First-time start: recording disclosure required before connecting (H1 privacy)
+    if(!d.msgs.length && !confirm(
+      'This call will be transcribed and processed by an AI model.\n\n' +
+      'Please do not share personal information such as ID numbers, passwords, or financial account details.\n\n' +
+      'Continue?'
+    )) return;
     call?.hangup(); wrapped=false; turn=null;
     status('connect');
     const me=liveCall({
@@ -1175,5 +1212,5 @@ function merge(saved){
       if(BL[id]&&id!=='sent') return jumpTo(id,(+st||1)-1);
     }
   }
-  S.view={b:'welcome',s:0}; render();
+  S.view={b:'disclaimer',s:0}; render();
 })();
